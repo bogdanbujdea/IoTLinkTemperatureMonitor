@@ -5,6 +5,7 @@ using IOTLinkAPI.Addons;
 using IOTLinkAPI.Helpers;
 using IOTLinkAPI.Platform.HomeAssistant;
 using LibreHardwareMonitor.Hardware;
+using Timer = System.Timers.Timer;
 
 namespace TemperatureMonitor
 {

@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30709.132
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureMonitor", "src\TemperatureMonitor.csproj", "{16429997-E957-42F3-B1AD-B35AC35124BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureMonitor", "src\TemperatureMonitor\TemperatureMonitor.csproj", "{16429997-E957-42F3-B1AD-B35AC35124BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioCommands", "src\AudioCommands\AudioCommands.csproj", "{F9A080E6-96C6-4633-A7D4-EC03945D0470}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{16429997-E957-42F3-B1AD-B35AC35124BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16429997-E957-42F3-B1AD-B35AC35124BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16429997-E957-42F3-B1AD-B35AC35124BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9A080E6-96C6-4633-A7D4-EC03945D0470}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9A080E6-96C6-4633-A7D4-EC03945D0470}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9A080E6-96C6-4633-A7D4-EC03945D0470}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9A080E6-96C6-4633-A7D4-EC03945D0470}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

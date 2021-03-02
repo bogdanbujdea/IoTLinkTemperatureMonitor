@@ -1,0 +1,9 @@
+########################################################################
+# Addon Information
+########################################################################
+enabled: true
+id: AudioCommands
+name: Audio Commands
+file: AudioCommands.dll
+minApiVersion: 2.2.0
+maxApiVersion: 
