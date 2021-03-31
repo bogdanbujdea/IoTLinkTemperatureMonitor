@@ -1,13 +1,18 @@
 ﻿using System;
+using System.Timers;
 using AudioCommands.Helpers;
 using IOTLinkAPI.Addons;
 using IOTLinkAPI.Helpers;
 using IOTLinkAPI.Platform.Events.MQTT;
+using IOTLinkAPI.Platform.HomeAssistant;
 
 namespace AudioCommands.Service
 {
     public class AudioCommandsService : ServiceAddon
     {
+        private Timer _monitorTimer;
+        private string _audioTopic = "audio/volume";
+
         public override void Init(IAddonManager addonManager)
         {
             base.Init(addonManager);
@@ -16,6 +21,33 @@ namespace AudioCommands.Service
             GetManager().SubscribeTopic(this, "audio/mute", OnAudioMuteMessage);
             GetManager().SubscribeTopic(this, "audio/default", OnAudioSetDefaultMessage);
             GetManager().SubscribeTopic(this, "audio/default-comms", OnAudioSetDefaultCommsMessage);
+
+
+            GetManager().PublishDiscoveryMessage(this, _audioTopic, "Volume", new HassDiscoveryOptions
+            {
+                Id = "Volume",
+                Name = "Volume",
+                Component = HomeAssistantComponent.Sensor,
+                Icon = "mdi:volume-high"
+            });
+            _monitorTimer = new Timer();
+            _monitorTimer.Interval = 10000;
+            _monitorTimer.Elapsed += TimerElapsed;
+            _monitorTimer.Start();
+        }
+
+        private void TimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            try
+            {
+                var volume = AudioPlatformHelper.GetAudioDeviceInfo(Guid.Empty).Volume;
+                LoggerHelper.Info($"Current volume is {volume}");
+                GetManager().PublishMessage(this, _audioTopic, volume.ToString());
+            }
+            catch (Exception exception)
+            {
+                LoggerHelper.Error("Failed to send volume " + exception);
+            }
         }
 
         private async void OnAudioVolumeSetMessage(object sender, MQTTMessageEventEventArgs e)
