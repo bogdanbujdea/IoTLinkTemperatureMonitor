@@ -54,12 +54,21 @@ namespace TemperatureMonitor
             };
 
             computer.Open();
-            var cpu = computer.Hardware.FirstOrDefault(h => h.HardwareType == HardwareType.Cpu);
-            var temperatureSensors = cpu.Sensors
-                .Where(s => s.Name.StartsWith("CPU Core") && s.Name.ToLower().Contains("tjmax") == false && s.SensorType == SensorType.Temperature)
-                .ToList();
-            var averageTemperature = temperatureSensors.Average(t => t.Value.GetValueOrDefault());
-            return (int)averageTemperature;
+            try
+            {
+                var cpu = computer.Hardware.FirstOrDefault(h => h.HardwareType == HardwareType.Cpu);
+                var temperatureSensors = cpu?.Sensors.Where(s => s.SensorType == SensorType.Temperature).ToList();
+                var cpuTempSensor = temperatureSensors?.FirstOrDefault(t => t.Name.ToLower() == "core average") ??
+                                    temperatureSensors?.First();
+                if (cpuTempSensor?.Value != null) 
+                    return (int) cpuTempSensor.Value;
+                return 0;
+            }
+            catch (Exception e)
+            {
+                LoggerHelper.Error("Failed to read temperature", e);
+                return 0;
+            }
         }
     }
 }
